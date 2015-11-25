@@ -13,6 +13,9 @@
 	"dependencies": {
 		"stylus-type-utils": "^0"
 	},
+	"peerDependencies": {
+		"stylus": "^0"
+	},
 	"author": "BKWLD",
 	"license": "MIT",
 	"bugs": {

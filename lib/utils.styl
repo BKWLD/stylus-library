@@ -14,3 +14,32 @@ clearfix()
 	content ""
 	display table
 	clear both
+
+/**
+ * Adjust the provided property across a range of created media queries.
+ *
+ * @param property property A CSS property
+ * @param number max-value  The value of the property at the max-width
+ * @param number min-value  The value of the property at the min-width
+ * @oaram unit max-width    The first break will be 1px narrower than this width
+ * @oaram unit min-width    The final max-width break will be at this size
+ * @param integer steps     How many breakpoints to create in between
+ */
+mq-values(property, max-value, min-value, max-width = 1400px, min-width = 500px, steps = 6)
+
+	// Set intial value, essentially the widest browser setting
+	{property} max-value
+
+	// Loop through the range
+	for i in 0...steps
+
+		// If the first step, make the break 1 less that the max-width.  This makes
+		// this function's API easier to understand, it makes it so the max-value
+		// is available at the max-width but then the first break immediately follows.
+		break = max-width - floor((max-width - min-width) * i / (steps - 1))
+		if i == 0
+			break -= 1px
+
+		// Set the media query and value
+		@media (max-width: break)
+			{property} max-value - ((max-value - min-value) * (i + 1) / steps)
