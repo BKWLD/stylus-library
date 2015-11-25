@@ -1,0 +1,70 @@
+// Make links inherit the body color and have no underline
+a
+	color inherit
+	text-decoration none
+
+// Border box everything
+*, *:before, *:after
+	box-sizing border-box
+
+// Make images fill containers by default
+img
+	max-width 100%
+	height auto
+
+// Disable Browser chrome on input elements
+input, textarea, button, select
+	outline none
+	appearance none
+	&:focus
+		outline none
+
+// Antialias all text
+*
+	-webkit-font-smoothing antialiased;
+	-moz-osx-font-smoothing grayscale;
+
+/**
+ * Boilerplace classes that add common functionality
+ */
+
+.clearfix
+	clearfix()
+
+.wysiwyg
+	wysiwyg()
+
+.text-left
+	text-align left
+
+.text-right
+	text-align right
+
+.text-center
+	text-align center
+
+/**
+ * Selections from HTML5 boilerplate
+ * https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css
+ */
+
+// Remove text-shadow in selection highlight
+::selection
+	text-shadow none
+::-moz-selection
+	text-shadow none
+
+// Remove the gap between audio, canvas, iframes, images, videos and the bottom
+// of their containers:
+// https://github.com/h5bp/html5-boilerplate/issues/440
+audio,
+canvas,
+iframe,
+img,
+svg,
+video
+	vertical-align middle
+
+// Allow only vertical resizing of textareas
+textarea
+	resize vertical
