@@ -21,3 +21,73 @@ cover()
 	background-size cover
 	background-position center center
 	background-repeat no-repeat
+
+/**
+ * Center using absolute position and transforms.  This technique is easier to
+ * use but can sometimes lead to blurry text / contents.  It works best if the
+ * content being vertically aligned has a fixed height.
+ *
+ * http://zerosixthree.se/vertical-align-anything-with-just-3-lines-of-css/
+ * http://davidwalsh.name/css-vertical-center
+ *
+ * Note, if parent is blurry, you can try add to parent:
+ *
+ *   transform-style: preserve-3d
+ *
+ * About the h-center using `right`: http://stackoverflow.com/a/27990348/59160
+ */
+
+center()
+	position absolute
+	top 50%
+	right 50%
+	translate 50%, -50%
+v-center()
+	position absolute
+	top 50%
+	translateY -50%
+h-center()
+	position absolute
+	right 50%
+	translateX 50%
+
+/**
+ * Transform using pseduo element and vertical-align. This technique can add
+ * invisible space with a width to the inside of what you add this to which can
+ * make 100% width contents display wrong.  This can be fixed, however, by
+ * making the parent have `font-size: 0` and then restoring the font-size in the
+ * child.
+ *
+ * See: http://css-tricks.com/centering-in-the-unknown/
+ */
+
+// Horizontal center as well as vertical
+pseudo-center(with-children = false)
+	pseudo-v-center(with-children)
+	text-align center
+
+ // Add this to the containing div of the items to be centered
+pseudo-v-center(with-children = false)
+	&:before
+		content ''
+		display inline-block
+		height 100%
+		vertical-align middle
+
+	// Make the contents vertically aligned
+	if with-children
+		> *
+			pseudo-v-center-content()
+
+// Add this to the actual block of content you want centered
+pseudo-v-center-content()
+	display inline-block
+	vertical-align middle
+
+/**
+ * Enable GPU caching of elements, which can fix weird layout issues but can
+ * lead to fuzziness in text and other fine lines
+ */
+gpu-cache()
+	backface-visibility hidden
+	translate3d 0,0,0
