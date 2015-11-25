@@ -83,11 +83,3 @@ pseudo-v-center(with-children = false)
 pseudo-v-center-content()
 	display inline-block
 	vertical-align middle
-
-/**
- * Enable GPU caching of elements, which can fix weird layout issues but can
- * lead to fuzziness in text and other fine lines
- */
-gpu-cache()
-	backface-visibility hidden
-	translate3d 0,0,0

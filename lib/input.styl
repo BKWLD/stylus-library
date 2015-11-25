@@ -1,0 +1,37 @@
+/**
+ * Make something button-like
+ */
+button()
+
+	// Buttons are usually inline-block
+	display inline-block
+
+	// Show pressable cursor
+	cursor pointer
+
+	// Disable focus outlining effects
+	outline none
+
+	// Don't make the label text selectable
+	user-select none
+
+	// Disable iphone on translucent black effect
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+
+/**
+ * Apply hovers only if Modernizr has identified the browser as non-touch.
+ * We're currently not 100% sure this is needed if Fastclick is being used.
+ */
+hover(include_active = false)
+	.no-touch &:hover
+		{block}
+	if include_active
+		+active()
+			{block}
+
+// Apply active to both touch and non-touch
+active()
+	.no-touch &:active,
+	&:active,
+	&.active
+		{block}

@@ -1,0 +1,22 @@
+/**
+ * Make a border-radius based circle in CSS
+ */
+circle(size, color)
+	rectangle(size, size, color, size/2)
+
+/**
+ * Make a square in CSS
+ */
+square(size, color, radius)
+	rectangle(size, size, color, radius)
+
+/**
+ * Make a rectangle in CSS in one line
+ */
+rectangle(width, height, color, radius)
+	width width
+	height height
+	if color
+		background-color: color
+	if radius
+		border-radius radius
