@@ -1,11 +1,8 @@
 {
 	"name": "stylus-library",
-	"version": "1.0.0",
+	"version": "0.0.0",
 	"description": "Stylus utility mixins",
 	"main": "index.styl",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/BKWLD/stylus-library.git"
@@ -13,6 +10,9 @@
 	"keywords": [
 		"stylus"
 	],
+	"dependencies": {
+		"stylus-type-utils": "^0"
+	},
 	"author": "BKWLD",
 	"license": "MIT",
 	"bugs": {
