@@ -1,19 +1,19 @@
 /**
  * Make a border-radius based circle in CSS
  */
-circle(size, color)
+circle(size, color = null)
 	rectangle(size, size, color, size/2)
 
 /**
  * Make a square in CSS
  */
-square(size, color, radius)
+square(size, color = null, radius = null)
 	rectangle(size, size, color, radius)
 
 /**
  * Make a rectangle in CSS in one line
  */
-rectangle(width, height, color, radius)
+rectangle(width, height, color = null, radius = null)
 	width width
 	height height
 	if color
