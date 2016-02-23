@@ -22,7 +22,7 @@ button()
  * Apply hovers only if Modernizr has identified the browser as non-touch.
  */
 hover(include_active = false)
-	.no-touch &:hover
+	.no-touchevents &:hover
 		{block}
 	if include_active
 		+active()
@@ -30,7 +30,7 @@ hover(include_active = false)
 
 // Apply active to both touch and non-touch
 active()
-	.no-touch &:active,
+	.no-touchevents &:active,
 	&:active,
 	&.active
 		{block}
