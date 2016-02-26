@@ -1,6 +1,6 @@
 {
 	"name": "stylus-library",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"description": "Stylus utility mixins",
 	"main": "index.styl",
 	"repository": {
@@ -11,6 +11,7 @@
 		"stylus"
 	],
 	"dependencies": {
+		"stylus-easing": "^1",
 		"stylus-type-utils": "^0"
 	},
 	"author": "BKWLD",
