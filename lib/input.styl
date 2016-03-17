@@ -20,21 +20,23 @@ button()
 
 /**
  * Apply hovers only if Modernizr has identified the browser as non-touch.
- * 
+ *
  * Ex:
  *   +hover(true)
  *     background black
  */
-hover(include_active = false)
+hover(includeActive = false)
 	.no-touchevents &:hover
 		{block}
-	if include_active
+	if includeActive
 		+active()
 			{block}
 
 // Apply active to both touch and non-touch
-active()
+active(addActiveSelector = true)
 	.no-touchevents &:active,
-	&:active,
-	&.active
+	&:active
 		{block}
+	if addActiveSelector
+		&.active
+			{block}
