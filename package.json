@@ -1,23 +1,23 @@
 {
-	"name": "bukwild-stylus-library",
-	"version": "0.2.1",
-	"description": "Stylus utility mixins",
-	"main": "index.styl",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/BKWLD/stylus-library.git"
-	},
-	"keywords": [
-		"stylus"
-	],
-	"dependencies": {
-		"stylus-easing": "^1",
-		"stylus-type-utils": "^0"
-	},
-	"author": "BKWLD",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/BKWLD/stylus-library/issues"
-	},
-	"homepage": "https://github.com/BKWLD/stylus-library#readme"
+  "name": "bukwild-stylus-library",
+  "version": "0.2.2",
+  "description": "Stylus utility mixins",
+  "main": "index.styl",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BKWLD/stylus-library.git"
+  },
+  "keywords": [
+    "stylus"
+  ],
+  "dependencies": {
+    "stylus-easing": "^1",
+    "stylus-type-utils": "^0"
+  },
+  "author": "BKWLD",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BKWLD/stylus-library/issues"
+  },
+  "homepage": "https://github.com/BKWLD/stylus-library#readme"
 }
