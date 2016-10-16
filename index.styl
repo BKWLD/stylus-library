@@ -1,10 +1,10 @@
 // Import type conversion library which is used both within this package and
 // is useful within app code.  I am referncing the lib file explicitly because
 // the package's `main` kept interceeding and trying to require js
-@require '~stylus-type-utils/lib/type-utils/index.styl'
+@import '~stylus-type-utils/lib/type-utils/index.styl'
 
 // Load stylus-easing package's vars
-@require 'stylus-easing'
+@import '~stylus-easing'
 
 // Glob in all files in lib
-@require 'lib/*'
+@import 'lib/*'
