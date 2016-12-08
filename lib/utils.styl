@@ -44,3 +44,17 @@ mq-values(property, max-value, min-value, max-width = 1400px, min-width = 500px,
 		// Set the media query and value
 		@media (max-width: break)
 			{property} max-value - ((max-value - min-value) * (i + 1) / steps)
+
+
+/**
+ * Use vws for the unit of a prop until the break is reached
+ *
+ * @param prop property   A CSS property (without quotes)
+ * @param number size     The vw value as a number
+ * @param break unit(px)  The min-width breakpoint to switch to pixe;s
+ */
+vw-until(prop, size, break = max-w)
+	size = unit(size, '')
+	{prop} unit(size, vw)
+	@media(min-width break)
+		{prop} break * (size / 100)
