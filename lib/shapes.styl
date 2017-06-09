@@ -73,3 +73,28 @@ triangle(width, height, color = #000, direction = 'top')
 	// Mixin styles for passed direction
 	styles = directions[direction]
 	{styles}
+
+/**
+ * Make the border of an triangle
+ */
+triangle-outline(size, color)
+	square size
+	border-bottom 1px solid color
+	position relative
+	h = math(size * size + size * .5 * size * .5, 'sqrt')
+	angle = 26.56505117707799 // Hard coding Math.atan(0.5)*180/Math.PI
+	&:before, &:after
+		content ''
+		position absolute
+		display block
+		width h
+		bottom -1px
+		border-bottom @border-bottom
+	&:before
+		left 0.5px
+		transform-origin left
+		transform rotate(angle - 90deg)
+	&:after
+		right 0.5px
+		transform-origin right
+		transform rotate(90deg - angle)
