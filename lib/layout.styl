@@ -83,3 +83,34 @@ pseudo-v-center(with-children = false)
 pseudo-v-center-content()
 	display inline-block
 	vertical-align middle
+
+
+/**
+ * Give the div a fixed aspect ratio using psuedo elements. Defaults to
+ * centering the content
+ *
+ * @param  float aspect  The aspect ratio as a float, ex: 19/9
+ * @param  boolean center  Whether the vertically align the contents
+ */
+aspect-ratio(aspect, center = true)
+
+	// Set aspect ratio
+	&:before
+		content ''
+		padding-top (1 / aspect) * 100%
+		height 100%
+		display inline-block
+
+		// Center the content
+		if center
+			vertical-align middle
+
+	// Sets the font-size to 0 to prevent contents from wrapping to the next line
+	font-size 0
+	> *
+		font-size body-font-size
+
+		// Center the content
+		if center
+			display inline-block
+			vertical-align middle
