@@ -17,9 +17,13 @@ font-size(size, literal = false)
  */
 wysiwyg()
 
-	// Add standard double line break for these
-	ul, ol
+	// Add common margins to elements that may have been cleared
+	ul, ol, p, h1, h2, h3, h4, h5, h6, blockquote
 		margin 1em auto
+		&:first-child
+			margin-top 0
+		&:last-child
+			margin-bottom 0
 
 	// Make bold work
 	b, strong
@@ -36,6 +40,7 @@ wysiwyg()
 		list-style-type disc
 		list-style-position outside
 		margin-left margin
+		padding-left 0
 
 	ol
 		list-style-type decimal
@@ -56,8 +61,8 @@ wysiwyg()
 	// These are as generic as possible here. Any specific
 	// blockquote styles will be in the project's sass
 	blockquote
-		width 80%
-		margin 20px auto
+		margin-left margin
+		margin-right @margin
 		display block
 
 	// images need a height: auto so they can maintain their aspect ratio if they
