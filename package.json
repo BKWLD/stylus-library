@@ -15,7 +15,7 @@
     "stylus-type-utils": "^0"
   },
   "peerDependencies": {
-    "stylus": "^0"
+    "stylus": "*"
   },
   "author": "Bukwild",
   "license": "MIT",
