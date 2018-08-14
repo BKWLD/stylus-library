@@ -5,7 +5,7 @@
  * @param {boolean} lieral If true, don't do the rem conversion
  */
 font-size(size, literal = false)
-	if literal or typeof(size) != 'unit' or unit(size) != 'px' or size <= 10px
+	if literal or typeof(size) != 'unit' or unit(size) != 'px' or size <= 14px
 		font-size size
 	else
 		font-size rem(size)
