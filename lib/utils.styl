@@ -16,6 +16,42 @@ clearfix()
 		display table
 		clear both
 
+// Scale a property value between min-size and max-size with the width of the
+// viewport until it is above or below the min-scale-width and max-scale-width
+// values.  The values MUST BE UNITLESS.  This was done so that this could be
+// used with CSS vars (ex: var(--)) and I could find no way in stylus to test
+// for whether an argument was a css var or not; I kept getting fatal errors.
+fluid(property,
+	max-size,
+	min-size = null,
+	max-scale-width = null,
+	min-scale-width = 375)
+
+	// The multiplier applied when no min-width was set
+	fluid-auto-min-size-factor ?= 0.5
+
+	// Default max-scale-width to the max-width
+	unless max-scale-width
+		max-scale-width = unit(max-w, '')
+
+	// Return the calc expression that sets a scaling value
+	if min-size != null
+		{property} 'calc(%s * 1px + (%s - %s)/(%s - %s) * (100vw - %s * 1px))' % (min-size max-size min-size max-scale-width min-scale-width min-scale-width)
+	else
+		{property} 'calc(%s * 1px * %s + (%s - %s * %s)/(%s - %s) * (100vw - %s * 1px))' % (max-size fluid-auto-min-size-factor max-size max-size fluid-auto-min-size-factor max-scale-width min-scale-width min-scale-width)
+
+	// Cap it to min size when small
+	@media(max-width min-scale-width * 1px)
+		if min-size != null
+			{property} 'calc(%s * 1px)' % min-size
+		else
+			{property} 'calc(%s * 1px * %s)' % (max-size fluid-auto-min-size-factor)
+
+	// Cap it to max size when large
+	@media(min-width max-scale-width * 1px)
+		{property} 'calc(%s * 1px)' % max-size
+
+
 /**
  * Adjust the provided property across a range of created media queries.
  *
