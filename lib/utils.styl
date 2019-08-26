@@ -16,11 +16,27 @@ clearfix()
 		display table
 		clear both
 
-// Scale a property value between min-size and max-size with the width of the
-// viewport until it is above or below the min-scale-width and max-scale-width
-// values.  The values MUST BE UNITLESS.  This was done so that this could be
-// used with CSS vars (ex: var(--)) and I could find no way in stylus to test
-// for whether an argument was a css var or not; I kept getting fatal errors.
+/**
+ * Scale a property value between min-size and max-size with the width of the
+ * viewport until it is above or below the min-scale-width and max-scale-width
+ * values.  The values MUST BE UNITLESS.  This was done so that this could be
+ * used with CSS vars (ex: var(--)) and I could find no way in stylus to test
+ * for whether an argument was a css var or not; I kept getting fatal errors.
+ *
+ * Example:
+ *
+ * .div
+ *
+ *   // Scales padding between 40px (desktop) and 20px (mobile, 375px)
+ *   fluid padding, 40 
+ *
+ *   // Scales font-size between 72px and 32px
+ *   fluid font-size, 72, 32 
+ *
+ *   // Scales margin-top from 60px down to 20px, stopping when the browser
+ *   // reaches 768px wide
+ *   fluid margin-top, 60, 20, null, 768
+ */
 fluid(property,
 	max-size,
 	min-size = null,
