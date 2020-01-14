@@ -18,10 +18,10 @@ clearfix()
 
 /**
  * Scale a property value between min-size and max-size with the width of the
- * viewport until it is above or below the min-scale-width and max-scale-width
- * values.  The values MUST BE UNITLESS.  This was done so that this could be
- * used with CSS vars (ex: var(--)) and I could find no way in stylus to test
- * for whether an argument was a css var or not; I kept getting fatal errors.
+ * viewport until it is below the min-break or above the max-break values.  
+ * The values MUST BE UNITLESS.  This was done so that this could be used with 
+ * CSS vars (ex: var(--)) and I could find no way in stylus to test for whether 
+ * an argument was a css var or not; I kept getting fatal errors.
  *
  * Example:
  *
@@ -35,36 +35,36 @@ clearfix()
  *
  *   // Scales margin-top from 60px down to 20px, stopping when the browser
  *   // reaches 768px wide
- *   fluid margin-top, 60, 20, null, 768
+ *   fluid(margin-top, 60, 20, min-break: 768)
  */
 fluid(property,
 	max-size,
 	min-size = null,
-	max-scale-width = null,
-	min-scale-width = 375)
+	max-break = null,
+	min-break = 375)
 
 	// The multiplier applied when no min-width was set
 	fluid-auto-min-size-factor ?= 0.5
 
-	// Default max-scale-width to the max-width
-	unless max-scale-width
-		max-scale-width = unit(max-w, '')
+	// Default max-break to the max-width
+	unless max-break
+		max-break = unit(max-w, '')
 
 	// Return the calc expression that sets a scaling value
 	if min-size != null
-		{property} 'calc(%s * 1px + (%s - %s)/(%s - %s) * (100vw - %s * 1px))' % (min-size max-size min-size max-scale-width min-scale-width min-scale-width)
+		{property} 'calc(%s * 1px + (%s - %s)/(%s - %s) * (100vw - %s * 1px))' % (min-size max-size min-size max-break min-break min-break)
 	else
-		{property} 'calc(%s * 1px * %s + (%s - %s * %s)/(%s - %s) * (100vw - %s * 1px))' % (max-size fluid-auto-min-size-factor max-size max-size fluid-auto-min-size-factor max-scale-width min-scale-width min-scale-width)
+		{property} 'calc(%s * 1px * %s + (%s - %s * %s)/(%s - %s) * (100vw - %s * 1px))' % (max-size fluid-auto-min-size-factor max-size max-size fluid-auto-min-size-factor max-break min-break min-break)
 
 	// Cap it to min size when small
-	@media(max-width min-scale-width * 1px)
+	@media(max-width min-break * 1px)
 		if min-size != null
 			{property} 'calc(%s * 1px)' % min-size
 		else
 			{property} 'calc(%s * 1px * %s)' % (max-size fluid-auto-min-size-factor)
 
 	// Cap it to max size when large
-	@media(min-width max-scale-width * 1px)
+	@media(min-width max-break * 1px)
 		{property} 'calc(%s * 1px)' % max-size
 
 
