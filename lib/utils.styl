@@ -19,9 +19,7 @@ clearfix()
 /**
  * Scale a property value between min-size and max-size with the width of the
  * viewport until it is below the min-break or above the max-break values.  
- * The values MUST BE UNITLESS.  This was done so that this could be used with 
- * CSS vars (ex: var(--)) and I could find no way in stylus to test for whether 
- * an argument was a css var or not; I kept getting fatal errors.
+ * The values must be pixels or css vars that resolve to pixels.
  *
  * Example:
  *
@@ -43,29 +41,38 @@ fluid(property,
 	max-break = null,
 	min-break = 375)
 
-	// The multiplier applied when no min-width was set
-	fluid-auto-min-size-factor ?= 0.5
-
 	// Default max-break to the max-width
 	unless max-break
-		max-break = unit(max-w, '')
+		max-break = max-w
+
+	// The multiplier applied when no min-width was set
+	fluid-auto-min-size-factor ?= 0.7
+	unless min-size
+		min-size = max-size * fluid-auto-min-size-factor
+
+	// Strip units
+	unless typeof(max-size) == 'call'
+		max-size = unit(max-size, '')
+	unless typeof(min-size) == 'call'
+		min-size = unit(min-size, '')
+	unless typeof(max-break) == 'call'
+		max-break = unit(max-break, '')
+	unless typeof(min-break) == 'call'
+		min-break = unit(min-break, '')
 
 	// Return the calc expression that sets a scaling value
-	if min-size != null
-		{property} 'calc(%s * 1px + (%s - %s)/(%s - %s) * (100vw - %s * 1px))' % (min-size max-size min-size max-break min-break min-break)
-	else
-		{property} 'calc(%s * 1px * %s + (%s - %s * %s)/(%s - %s) * (100vw - %s * 1px))' % (max-size fluid-auto-min-size-factor max-size max-size fluid-auto-min-size-factor max-break min-break min-break)
+	ratio = (max-size - min-size) / (max-break - min-break)
+	base-size = unit(min-size - ratio * min-break, 'px')
+	scaling-size = ratio * 100vw
+	{property} 'calc(%s + %s)' % (base-size scaling-size)
 
 	// Cap it to min size when small
-	@media(max-width min-break * 1px)
-		if min-size != null
-			{property} 'calc(%s * 1px)' % min-size
-		else
-			{property} 'calc(%s * 1px * %s)' % (max-size fluid-auto-min-size-factor)
-
+	@media(max-width: unit(min-break, 'px'))
+		{property} unit(min-size, 'px')
+		
 	// Cap it to max size when large
-	@media(min-width max-break * 1px)
-		{property} 'calc(%s * 1px)' % max-size
+	@media(min-width: unit(max-break, 'px'))
+		{property} unit(max-size, 'px')
 
 
 /**
