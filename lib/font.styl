@@ -1,16 +1,4 @@
 /**
- * Use rems for font-size unless the font is less than 14px
- *
- * @param {px}      size
- * @param {boolean} lieral If true, don't do the rem conversion
- */
-font-size(size, literal = false)
-	if literal or typeof(size) != 'unit' or unit(size) != 'px' or size <= 14px
-		font-size size
-	else
-		font-size rem(size)
-
-/**
  * A base set of styles designed to be applied to containers
  * of database driven content that was populated through
  * CKEditor (or, convievably, another WYSIWYG editor)
