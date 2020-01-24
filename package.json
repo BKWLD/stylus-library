@@ -1,6 +1,6 @@
 {
   "name": "bukwild-stylus-library",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Stylus utility mixins",
   "main": "index.styl",
   "repository": {
