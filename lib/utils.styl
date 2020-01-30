@@ -42,12 +42,12 @@ fluid(property,
 	min-break = 375)
 
 	// Default max-break to the max-width
-	unless max-break
+	if max-break == null
 		max-break = max-w
 
 	// The multiplier applied when no min-width was set
 	fluid-auto-min-size-factor ?= 0.7
-	unless min-size
+	if min-size == null
 		min-size = max-size * fluid-auto-min-size-factor
 
 	// Strip units
