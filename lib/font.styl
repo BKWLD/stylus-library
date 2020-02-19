@@ -7,7 +7,8 @@ wysiwyg()
 
 	// Add common margins to elements that may have been cleared
 	ul, ol, p, h1, h2, h3, h4, h5, h6, blockquote
-		margin 1em auto
+		margin-top 1em
+		margin-bottom @margin-top
 
 		// Don't add vertical margins if on the edges
 		&:first-child
