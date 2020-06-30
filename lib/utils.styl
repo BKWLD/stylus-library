@@ -18,7 +18,7 @@ clearfix()
 
 /**
  * Scale a property value between min-size and max-size with the width of the
- * viewport until it is below the min-break or above the max-break values.  
+ * viewport until it is below the min-break or above the max-break values.
  * The values must be pixels or css vars that resolve to pixels.
  *
  * Example:
@@ -26,10 +26,10 @@ clearfix()
  * .div
  *
  *   // Scales padding between 40px (desktop) and 20px (mobile, 375px)
- *   fluid padding, 40 
+ *   fluid padding, 40
  *
  *   // Scales font-size between 72px and 32px
- *   fluid font-size, 72, 32 
+ *   fluid font-size, 72, 32
  *
  *   // Scales margin-top from 60px down to 20px, stopping when the browser
  *   // reaches 768px wide
@@ -69,11 +69,10 @@ fluid(property,
 	// Cap it to min size when small
 	@media(max-width: unit(min-break, 'px'))
 		{property} unit(min-size, 'px')
-		
+
 	// Cap it to max size when large
 	@media(min-width: unit(max-break, 'px'))
 		{property} unit(max-size, 'px')
-
 
 /**
  * Adjust the provided property across a range of created media queries.
