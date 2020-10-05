@@ -1,0 +1,13 @@
+/**
+ * Motion is ok.  (Note: Won't match IE)
+ */
+motion-ok()
+	@media (prefers-reduced-motion: no-preference)
+		{block}
+
+/**
+ * User prefers reduced motion.  (Note: Won't match IE)
+ */
+motion-not-ok()
+	@media (prefers-reduced-motion: reduce)
+		{block}
