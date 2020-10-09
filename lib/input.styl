@@ -61,7 +61,7 @@ hover-ancestor(ancestor, includeActive = false)
 // Apply active to both touch and non-touch
 active-ancestor(ancestor, addActiveSelector = true)
 	if ancestor is undefined
-		warn("hover-ancestor mixin requires an ancestor")
+		warn("active-ancestor mixin requires an ancestor")
 	.no-touchevents {ancestor}:active &,
 	{ancestor}:active &
 		{block}
