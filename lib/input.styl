@@ -40,3 +40,31 @@ active(addActiveSelector = true)
 	if addActiveSelector
 		&.active
 			{block}
+
+/**
+ * Hover Ancestor: Apply styles to an element when we hover one of its ancestors.
+ * Ex:
+ *   .card-title
+ *     background grey
+ *     +hover-ancestor(".card", true)
+ *       background black
+ */
+hover-ancestor(ancestor, includeActive = false)
+	if ancestor is undefined
+		warn("hover-ancestor mixin requires an ancestor")
+	.no-touchevents {ancestor}:hover &
+		{block}
+	if includeActive
+		+active-ancestor(ancestor)
+			{block}
+
+// Apply active to both touch and non-touch
+active-ancestor(ancestor, addActiveSelector = true)
+	if ancestor is undefined
+		warn("active-ancestor mixin requires an ancestor")
+	.no-touchevents {ancestor}:active &,
+	{ancestor}:active &
+		{block}
+	if addActiveSelector
+		{ancestor}.active &
+			{block}
