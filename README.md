@@ -6,6 +6,10 @@ Components:
 - **lib/** - Contains .styl files that define functions / imports. None of these files should contain any css selectors.  Read the comments within the individual files for details.
 - **boilerplate.styl** - CSS rules that are intended to be loaded after a CSS reset or normalize on a project.  Essentially, this is a set of global Bukwild conventions.
 
+## Settings
+
+See [index.styl](index.styl) for some default vars.
+
 ## Recommendations
 
 - Install https://github.com/WICG/focus-visible
