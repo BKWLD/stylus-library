@@ -41,11 +41,11 @@ fluid(property,
 	max-break = null,
 	min-break = 375)
 
-	// Default max-break to the max-width
-	if max-break == null && max-w
-		max-break = max-w
-
-	// The multiplier applied when no min-width was set
+	// Use defaults
+	if max-break == null
+		max-break = fluid-default-max-break
+	if min-break == null
+		min-break = fluid-default-min-break
 	if min-size == null
 		min-size = max-size * fluid-auto-min-size-factor
 
