@@ -115,3 +115,32 @@ vw-until(prop, size, break = max-w)
 	{prop} unit(size, vw)
 	@media(min-width break)
 		{prop} break * (size / 100)
+
+/**
+ * Media query helpers. Up is inclusive of the breakpoint, down is 1px less
+ * than it
+ */
+mobile-down()
+	@media(max-width mobile - 1px)
+		{block}
+mobile-up()
+	@media(min-width mobile)
+		{block}
+tablet-down()
+	@media(max-width tablet - 1px)
+		{block}
+tablet-up()
+	@media(min-width tablet)
+		{block}
+tablet-landscape-down()
+	@media(max-width tablet-landscape - 1px)
+		{block}
+tablet-landscape-up()
+	@media(min-width tablet-landscape)
+		{block}
+desktop-down()
+	@media(max-width desktop - 1px)
+		{block}
+desktop-up()
+	@media(min-width desktop)
+		{block}
