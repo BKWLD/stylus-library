@@ -41,12 +41,11 @@ fluid(property,
 	max-break = null,
 	min-break = 375)
 
-	// Default max-break to the max-width
-	if max-break == null && max-w
-		max-break = max-w
-
-	// The multiplier applied when no min-width was set
-	fluid-auto-min-size-factor ?= 0.7
+	// Use defaults
+	if max-break == null
+		max-break = fluid-default-max-break
+	if min-break == null
+		min-break = fluid-default-min-break
 	if min-size == null
 		min-size = max-size * fluid-auto-min-size-factor
 
@@ -116,3 +115,32 @@ vw-until(prop, size, break = max-w)
 	{prop} unit(size, vw)
 	@media(min-width break)
 		{prop} break * (size / 100)
+
+/**
+ * Media query helpers. Up is inclusive of the breakpoint, down is 1px less
+ * than it
+ */
+mobile-down()
+	@media(max-width mobile - 1px)
+		{block}
+mobile-up()
+	@media(min-width mobile)
+		{block}
+tablet-down()
+	@media(max-width tablet - 1px)
+		{block}
+tablet-up()
+	@media(min-width tablet)
+		{block}
+tablet-landscape-down()
+	@media(max-width tablet-landscape - 1px)
+		{block}
+tablet-landscape-up()
+	@media(min-width tablet-landscape)
+		{block}
+desktop-down()
+	@media(max-width desktop - 1px)
+		{block}
+desktop-up()
+	@media(min-width desktop)
+		{block}
