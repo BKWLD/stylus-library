@@ -26,15 +26,15 @@ button()
  *     background black
  */
 hover(includeActive = false)
-	.no-touchevents &:hover
-		{block}
+	@media (hover: hover)
+		&:hover
+			{block}
 	if includeActive
 		+active()
 			{block}
 
-// Apply active to both touch and non-touch
+// Apply active to both touch and non-touch.
 active(addActiveSelector = true)
-	.no-touchevents &:active,
 	&:active
 		{block}
 	if addActiveSelector
@@ -52,8 +52,9 @@ active(addActiveSelector = true)
 hover-ancestor(ancestor, includeActive = false)
 	if ancestor is undefined
 		warn("hover-ancestor mixin requires an ancestor")
-	.no-touchevents {ancestor}:hover &
-		{block}
+	@media (hover: hover)
+		{ancestor}:hover &
+			{block}
 	if includeActive
 		+active-ancestor(ancestor)
 			{block}
@@ -62,7 +63,6 @@ hover-ancestor(ancestor, includeActive = false)
 active-ancestor(ancestor, addActiveSelector = true)
 	if ancestor is undefined
 		warn("active-ancestor mixin requires an ancestor")
-	.no-touchevents {ancestor}:active &,
 	{ancestor}:active &
 		{block}
 	if addActiveSelector
