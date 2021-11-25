@@ -25,10 +25,6 @@ get-fluid-args(max-size,
 	max-break = null,
 	min-break = null)
 
-	// Default min-break
-	if min-break == null
-		min-break = 375
-
 	// Use defaults
 	if max-break == null
 		max-break = fluid-default-max-break
@@ -70,7 +66,7 @@ fluid-calc(
 	max-break=null, 
 	min-break=null)
 
-	// Apply default fallbacks and strip units
+	// Apply defaults
 	args = get-fluid-args(max-size, min-size, max-break, min-break)
 	max-size = args[0]
 	min-size = args[1]
@@ -109,7 +105,7 @@ fluid(property,
 	max-break=null,
 	min-break=null)
 
-	// Apply default fallbacks and strip units
+	// Apply defaults
 	args = get-fluid-args(max-size, min-size, max-break, min-break)
 	max-size = args[0]
 	min-size = args[1]
