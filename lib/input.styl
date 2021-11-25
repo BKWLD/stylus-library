@@ -68,17 +68,3 @@ active-ancestor(ancestor, addActiveSelector = true)
 	if addActiveSelector
 		{ancestor}.active &
 			{block}
-
-/** 
- * Apply styles to elements that were focused by the mouse, but not the keyboard.
- * Requires: https://github.com/WICG/focus-visible
- * 
- * Ex:
- *   &:focus
- *     outline black
- *   +mouse-focus()
- *     outline none
- */
-mouse-focus()
-	.js-focus-visible &:focus:not(.focus-visible)
-		{block}
