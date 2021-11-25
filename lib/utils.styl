@@ -51,8 +51,8 @@ get-fluid-args(max-size,
 	unless typeof(min-break) == 'call'
 		min-break = unit(min-break, '')
 
-	vars = max-size, min-size, max-break, min-break
-	return vars
+	args = max-size, min-size, max-break, min-break
+	return args
 
 /**
  * Fluid Calc: Return a calc() expression that uses px and vw to
