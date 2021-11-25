@@ -17,10 +17,10 @@ clearfix()
 		clear both
 
 /**
- * Return fluid arguments with default fallbacks applied and units stripped.
+ * Return fluid arguments with default fallbacks and units stripped.
  * Used by fluid mixins (fluid-calc, fluid)
  */
-get-fluid-vars(max-size,
+get-fluid-args(max-size,
 	min-size = null,
 	max-break = null,
 	min-break = null)
@@ -40,7 +40,7 @@ get-fluid-vars(max-size,
 
 	// Require proper units
 	if unit(max-size) && unit(max-size)!='px'
-		error("Fluid mixin: max-size and min-size units must be 'px' or none.  Got unit: " + unit(max-size))
+		error("Fluid mixin: Unit '" + unit(max-size) + "' is not supported.  Max-size and min-size units must be 'px' or none.")
 
 	// Strip units
 	unless typeof(max-size) == 'call'
@@ -72,11 +72,11 @@ fluid-calc(
 	min-break=null)
 
 	// Apply default fallbacks and strip units
-	vars = get-fluid-vars(max-size, min-size, max-break, min-break)
-	max-size = vars[0]
-	min-size = vars[1]
-	max-break = vars[2]
-	min-break = vars[3]
+	args = get-fluid-args(max-size, min-size, max-break, min-break)
+	max-size = args[0]
+	min-size = args[1]
+	max-break = args[2]
+	min-break = args[3]
 
 	// Return the calc expression that sets a scaling value
 	ratio = (max-size - min-size) / (max-break - min-break)
@@ -111,11 +111,11 @@ fluid(property,
 	min-break=null)
 
 	// Apply default fallbacks and strip units
-	vars = get-fluid-vars(max-size, min-size, max-break, min-break)
-	max-size = vars[0]
-	min-size = vars[1]
-	max-break = vars[2]
-	min-break = vars[3]
+	args = get-fluid-args(max-size, min-size, max-break, min-break)
+	max-size = args[0]
+	min-size = args[1]
+	max-break = args[2]
+	min-break = args[3]
 
 	// Main fluid-calc which sets a fluid value between max-size and min-size
 	{property} fluid-calc(max-size, min-size, max-break, min-break)
