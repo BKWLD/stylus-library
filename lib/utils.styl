@@ -17,9 +17,78 @@ clearfix()
 		clear both
 
 /**
- * Scale a property value between min-size and max-size with the width of the
- * viewport until it is below the min-break or above the max-break values.
- * The values must be pixels or css vars that resolve to pixels.
+ * Return fluid arguments with default fallbacks applied and units stripped.
+ * Used by fluid mixins (fluid-calc, fluid)
+ */
+get-fluid-vars(max-size,
+	min-size = null,
+	max-break = null,
+	min-break = null)
+
+	// Default min-break
+	if min-break == null
+		min-break = 375
+
+	// Default max-break to the max-width
+	if max-break == null && max-w
+		max-break = max-w
+
+	// The multiplier applied when no min-width was set
+	fluid-auto-min-size-factor ?= 0.7
+	if min-size == null
+		min-size = max-size * fluid-auto-min-size-factor
+
+	// Require proper units
+	if unit(max-size) && unit(max-size)!='px'
+		error("Fluid mixin: max-size and min-size units must be 'px' or none.  Got unit: " + unit(max-size))
+
+	// Strip units
+	unless typeof(max-size) == 'call'
+		max-size = unit(max-size, '')
+	unless typeof(min-size) == 'call'
+		min-size = unit(min-size, '')
+	unless typeof(max-break) == 'call'
+		max-break = unit(max-break, '')
+	unless typeof(min-break) == 'call'
+		min-break = unit(min-break, '')
+
+	vars = max-size, min-size, max-break, min-break
+	return vars
+
+/**
+ * Fluid Calc: Return a calc() expression that uses px and vw to
+ * smoothly and linearly scale our value from max-size to min-size
+ * as the viewport width changes from max-break to min-break.
+ * Use this for CSS properties that have multiple values on 
+ * one line, such as box-shadow, border-radius.
+ *
+ * Example:
+ * box-shadow 0 0 fluid-calc(10, 2) primary-color
+ */
+fluid-calc(
+	max-size,
+	min-size=null,
+	max-break=null, 
+	min-break=null)
+
+	// Apply default fallbacks and strip units
+	vars = get-fluid-vars(max-size, min-size, max-break, min-break)
+	max-size = vars[0]
+	min-size = vars[1]
+	max-break = vars[2]
+	min-break = vars[3]
+
+	// Return the calc expression that sets a scaling value
+	ratio = (max-size - min-size) / (max-break - min-break)
+	base-size = unit(min-size - ratio * min-break, 'px')
+	scaling-size = ratio * 100vw
+
+	return 'calc(%s + %s)' % (base-size scaling-size)
+
+/**
+ * Fluid: Set a CSS property with a fluid-calc() on it.  Also add 
+ * two @media queries that clamp the property to within the bounds of 
+ * max-size and min-size.
  *
  * Example:
  *
@@ -37,40 +106,25 @@ clearfix()
  */
 fluid(property,
 	max-size,
-	min-size = null,
-	max-break = null,
-	min-break = 375)
+	min-size=null,
+	max-break=null,
+	min-break=null)
 
-	// Default max-break to the max-width
-	if max-break == null && max-w
-		max-break = max-w
+	// Apply default fallbacks and strip units
+	vars = get-fluid-vars(max-size, min-size, max-break, min-break)
+	max-size = vars[0]
+	min-size = vars[1]
+	max-break = vars[2]
+	min-break = vars[3]
 
-	// The multiplier applied when no min-width was set
-	fluid-auto-min-size-factor ?= 0.7
-	if min-size == null
-		min-size = max-size * fluid-auto-min-size-factor
+	// Main fluid-calc which sets a fluid value between max-size and min-size
+	{property} fluid-calc(max-size, min-size, max-break, min-break)
 
-	// Strip units
-	unless typeof(max-size) == 'call'
-		max-size = unit(max-size, '')
-	unless typeof(min-size) == 'call'
-		min-size = unit(min-size, '')
-	unless typeof(max-break) == 'call'
-		max-break = unit(max-break, '')
-	unless typeof(min-break) == 'call'
-		min-break = unit(min-break, '')
-
-	// Return the calc expression that sets a scaling value
-	ratio = (max-size - min-size) / (max-break - min-break)
-	base-size = unit(min-size - ratio * min-break, 'px')
-	scaling-size = ratio * 100vw
-	{property} 'calc(%s + %s)' % (base-size scaling-size)
-
-	// Cap it to min size when small
+	// Cap it to min-size when small
 	@media(max-width: unit(min-break, 'px'))
 		{property} unit(min-size, 'px')
 
-	// Cap it to max size when large
+	// Cap it to max-size when large
 	@media(min-width: unit(max-break, 'px'))
 		{property} unit(max-size, 'px')
 
