@@ -17,9 +17,73 @@ clearfix()
 		clear both
 
 /**
- * Scale a property value between min-size and max-size with the width of the
- * viewport until it is below the min-break or above the max-break values.
- * The values must be pixels or css vars that resolve to pixels.
+ * Return fluid arguments with default fallbacks and units stripped.
+ * Used by fluid mixins (fluid-calc, fluid)
+ */
+get-fluid-args(max-size,
+	min-size = null,
+	max-break = null,
+	min-break = null)
+
+	// Use defaults
+	if max-break == null
+		max-break = fluid-default-max-break
+	if min-break == null
+		min-break = fluid-default-min-break
+	if min-size == null
+		min-size = max-size * fluid-auto-min-size-factor
+
+	// Require proper units
+	if unit(max-size) && unit(max-size)!='px'
+		error("Fluid mixin: Unit '" + unit(max-size) + "' is not supported.  Max-size and min-size units must be 'px' or none.")
+
+	// Strip units
+	unless typeof(max-size) == 'call'
+		max-size = unit(max-size, '')
+	unless typeof(min-size) == 'call'
+		min-size = unit(min-size, '')
+	unless typeof(max-break) == 'call'
+		max-break = unit(max-break, '')
+	unless typeof(min-break) == 'call'
+		min-break = unit(min-break, '')
+
+	args = max-size, min-size, max-break, min-break
+	return args
+
+/**
+ * Fluid Calc: Return a calc() expression that uses px and vw to
+ * smoothly and linearly scale our value from max-size to min-size
+ * as the viewport width changes from max-break to min-break.
+ * Use this for CSS properties that have multiple values on 
+ * one line, such as box-shadow, border-radius.
+ *
+ * Example:
+ * box-shadow 0 0 fluid-calc(10, 2) primary-color
+ */
+fluid-calc(
+	max-size,
+	min-size=null,
+	max-break=null, 
+	min-break=null)
+
+	// Apply defaults
+	args = get-fluid-args(max-size, min-size, max-break, min-break)
+	max-size = args[0]
+	min-size = args[1]
+	max-break = args[2]
+	min-break = args[3]
+
+	// Return the calc expression that sets a scaling value
+	ratio = (max-size - min-size) / (max-break - min-break)
+	base-size = unit(min-size - ratio * min-break, 'px')
+	scaling-size = ratio * 100vw
+
+	return 'calc(%s + %s)' % (base-size scaling-size)
+
+/**
+ * Fluid: Set a CSS property with a fluid-calc() on it.  Also add 
+ * two @media queries that clamp the property to within the bounds of 
+ * max-size and min-size.
  *
  * Example:
  *
@@ -37,39 +101,25 @@ clearfix()
  */
 fluid(property,
 	max-size,
-	min-size = null,
-	max-break = null,
-	min-break = 375)
+	min-size=null,
+	max-break=null,
+	min-break=null)
 
-	// Use defaults
-	if max-break == null
-		max-break = fluid-default-max-break
-	if min-break == null
-		min-break = fluid-default-min-break
-	if min-size == null
-		min-size = max-size * fluid-auto-min-size-factor
+	// Apply defaults
+	args = get-fluid-args(max-size, min-size, max-break, min-break)
+	max-size = args[0]
+	min-size = args[1]
+	max-break = args[2]
+	min-break = args[3]
 
-	// Strip units
-	unless typeof(max-size) == 'call'
-		max-size = unit(max-size, '')
-	unless typeof(min-size) == 'call'
-		min-size = unit(min-size, '')
-	unless typeof(max-break) == 'call'
-		max-break = unit(max-break, '')
-	unless typeof(min-break) == 'call'
-		min-break = unit(min-break, '')
+	// Main fluid-calc which sets a fluid value between max-size and min-size
+	{property} fluid-calc(max-size, min-size, max-break, min-break)
 
-	// Return the calc expression that sets a scaling value
-	ratio = (max-size - min-size) / (max-break - min-break)
-	base-size = unit(min-size - ratio * min-break, 'px')
-	scaling-size = ratio * 100vw
-	{property} 'calc(%s + %s)' % (base-size scaling-size)
-
-	// Cap it to min size when small
+	// Cap it to min-size when small
 	@media(max-width: unit(min-break, 'px'))
 		{property} unit(min-size, 'px')
 
-	// Cap it to max size when large
+	// Cap it to max-size when large
 	@media(min-width: unit(max-break, 'px'))
 		{property} unit(max-size, 'px')
 
