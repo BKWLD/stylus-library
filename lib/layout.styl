@@ -113,7 +113,7 @@ aspect-ratio(aspect, center = true)
 	// Set aspect ratio
 	&:before
 		content ''
-		padding-top (1 / aspect) * 100%
+		padding-top 'calc(100% / %s)' % aspect
 		height 100%
 		display inline-block
 
